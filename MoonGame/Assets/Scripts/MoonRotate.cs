@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoonRotate : MonoBehaviour {
+    //Rotates the Moon (and objects upon it) to give the impression
+    //that the player is moving.
 
-	public KeyCode pressLeft;
+    public KeyCode pressLeft;
 
 	public KeyCode pressRight;
 
 	public Sprite moonSprite;
-
-	//public float ZAngle;
 
 	// Use this for initialization
 	void Start () {
