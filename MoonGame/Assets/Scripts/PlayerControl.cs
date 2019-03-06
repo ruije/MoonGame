@@ -28,6 +28,9 @@ public class PlayerControl : MonoBehaviour {
             localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(speed);
             transform.localScale = localScale;
         }
+
         
     }
+
+    
 }
