@@ -14,6 +14,7 @@ public class ObjectDisplacer : MonoBehaviour {
     //this code will be applied to all sprites on the Moon's surface
     //EXCEPT for the player.
     public Sprite curSprite;
+    public int coins = 0;
 
     // Use this for initialization
     void Start () {
@@ -32,5 +33,6 @@ public class ObjectDisplacer : MonoBehaviour {
             //transform.Rotate(0, 0, 1 * 10 * Time.deltaTime);
             transform.Translate((float)Math.Cos(Time.deltaTime) / -reducer, (float)Math.Sin(Time.deltaTime) / reducer, 0);
         }
-    }
+        
+        }
 }
