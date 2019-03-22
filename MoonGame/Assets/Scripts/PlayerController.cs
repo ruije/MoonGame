@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
+    
+    //movement variables
     public float movex;
     public float speed;
     public float jumpforce;
 
+    //interactivity variables
     public int coins = 0;
-
+    public GameObject currObj = null;
     public Rigidbody2D rb2d;
 
     Vector3 startingPosition;
@@ -42,6 +44,11 @@ public class PlayerController : MonoBehaviour {
             localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(movex);
             transform.localScale = localScale;
         }
+        if (Input.GetKeyDown(KeyCode.Q) && currObj)
+        {
+            //Activate some function in the current item's script
+            currObj.SendMessage("DoInteraction");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col) // col is the trigger object we collided with
@@ -56,6 +63,22 @@ public class PlayerController : MonoBehaviour {
             //Add a life counter?
             //Reset position upon "death"
             transform.position = startingPosition;
+        }
+        //items can be picked up, or otherwise interacted with
+        else if (col.tag == "Item")
+        {
+            currObj = col.gameObject;
+            Debug.Log(currObj.name);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Item")
+        {
+            if (col.tag == currObj.name) {
+                currObj = null;
+            }
         }
     }
 }

@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\KeyController.cs" />
     <Compile Include="Assets\Scripts\MoonRotate.cs" />
     <Compile Include="Assets\Scripts\ObjectDisplacer.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
