@@ -25,6 +25,8 @@ public class Inventory : MonoBehaviour {
             {
                 inventory[i] = item;
                 isAdd = true;
+                item.SendMessage("DoInteraction");
+                Debug.Log("Pickup successful!");
                 break;
             }
             

@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 
     //interactivity variables
     public int coins = 0;
+    public ItemController currIOScript = null;
+    public Inventory inventory;
     public GameObject currObj = null;
     public Rigidbody2D rb2d;
 
@@ -44,10 +46,17 @@ public class PlayerController : MonoBehaviour {
             localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(movex);
             transform.localScale = localScale;
         }
-        if (Input.GetKeyDown(KeyCode.Q) && currObj)
+        if (Input.GetKeyDown(KeyCode.T) && currObj)
         {
-            //Activate some function in the current item's script
-            currObj.SendMessage("DoInteraction");
+            //Check if object is storable
+            if (currIOScript.invbool)
+            {
+                Debug.Log(currObj.name + " is inventory");
+                inventory.addItem(currObj);
+                //Activate some function in the current item's script
+                //currObj.SendMessage("DoInteraction");
+            }
+            
         }
     }
 
@@ -68,6 +77,8 @@ public class PlayerController : MonoBehaviour {
         else if (col.tag == "Item")
         {
             currObj = col.gameObject;
+            //Get script for the object
+            currIOScript = currObj.GetComponent<ItemController>();
             Debug.Log(currObj.name);
         }
     }

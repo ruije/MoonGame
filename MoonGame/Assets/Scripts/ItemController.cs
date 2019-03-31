@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyController : MonoBehaviour {
+public class ItemController : MonoBehaviour {
+
+    //if true this object is able to go in inventory
+    public bool invbool;
 
 	// Use this for initialization
 	void Start () {
