@@ -52,11 +52,37 @@ public class PlayerController : MonoBehaviour {
             if (currIOScript.invbool)
             {
                 Debug.Log(currObj.name + " is inventory");
-                inventory.addItem(currObj);
+                inventory.AddItem(currObj);
                 //Activate some function in the current item's script
                 //currObj.SendMessage("DoInteraction");
             }
-            
+            //Can the object be opened?
+            if (currIOScript.openable)
+            {
+                //Is it locked?
+                if (currIOScript.locked)
+                {
+                    //Does the player have the key?
+                    if (inventory.FindItem(currIOScript.itemNeeded))
+                    {
+                        currIOScript.locked = false;
+                        Debug.Log(currObj.name + " is unlocked");
+                        //run door animation
+                    }
+                    else
+                    {
+                        Debug.Log(currObj.name + " needs a key");
+                        //door is unopenable - do nothing
+                    }
+                }
+                else
+                {
+                    //run door animation
+                    Debug.Log(currObj.name + " swings open violently");
+                    currIOScript.Open();
+                }
+            }
+
         }
     }
 

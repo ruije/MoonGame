@@ -15,7 +15,8 @@ public class Inventory : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void addItem(GameObject item)
+
+    public void AddItem(GameObject item)
     {
         bool isAdd = false;
         //locate the first free slot
@@ -36,5 +37,22 @@ public class Inventory : MonoBehaviour {
             //inventory full
             Debug.Log("Inventory is already full");
         }
+    }
+
+    public bool FindItem(GameObject item)
+    {
+        for(int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i] == item)
+            {
+                return true;
+            }
+            else if(inventory[i] == null)
+            {
+                return false;
+            }
+        }
+        //if the iventory is full but does not contain the item
+        return false;
     }
 }
