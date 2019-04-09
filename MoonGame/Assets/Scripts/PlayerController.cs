@@ -84,11 +84,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
 
-            if (currIOScript.isNPC)
-            {
-                //tell it to speak
-                currIOScript.Speak();
-            }
+            
 
         }
     }
@@ -113,6 +109,13 @@ public class PlayerController : MonoBehaviour {
             //Get script for the object
             currIOScript = currObj.GetComponent<ItemController>();
             Debug.Log(currObj.name);
+            
+            //NPC's speak
+            if (currIOScript.isNPC)
+            {
+                //tell it to speak
+                currIOScript.Speak();
+            }
         }
     }
 
@@ -122,6 +125,13 @@ public class PlayerController : MonoBehaviour {
         {
             if (col.tag == currObj.name) {
                 currObj = null;
+            }
+
+            //clear NPC's speech
+            if (currIOScript.isNPC)
+            {
+                //tell it to speak
+                currIOScript.speachBubble.text = "";
             }
         }
     }
