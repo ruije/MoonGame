@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour {
                 //Activate some function in the current item's script
                 //currObj.SendMessage("DoInteraction");
             }
+
             //Can the object be opened?
             if (currIOScript.openable)
             {
@@ -81,6 +82,12 @@ public class PlayerController : MonoBehaviour {
                     Debug.Log(currObj.name + " swings open violently");
                     currIOScript.Open();
                 }
+            }
+
+            if (currIOScript.isNPC)
+            {
+                //tell it to speak
+                currIOScript.Speak();
             }
 
         }

@@ -47,10 +47,6 @@ public class Inventory : MonoBehaviour {
             {
                 return true;
             }
-            else if(inventory[i] == null)
-            {
-                return false;
-            }
         }
         //if the iventory is full but does not contain the item
         return false;
