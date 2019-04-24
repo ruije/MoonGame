@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour {
     public Inventory inventory;
     public GameObject currObj = null;
     public Rigidbody2D rb2d;
+    
+    //for parallax control
+    public GameObject parallaxObj;
+    private Parallax parallaxComp;
 
     Vector3 startingPosition;
 
@@ -22,6 +26,11 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         startingPosition = transform.position;
+        parallaxComp = parallaxObj.GetComponent<Parallax>();
+        if (parallaxComp)
+        {
+            Debug.Log(parallaxComp.name + " is parallax");
+        }
     }
 	
 	// Update is called once per frame
@@ -31,21 +40,38 @@ public class PlayerController : MonoBehaviour {
         movex = Input.GetAxis("Horizontal");
 
         //changes the velocity to match the keypress
+        //transforms position
         rb2d.velocity = new Vector2(movex * speed, rb2d.velocity.y);
+        //adjust parallax
+        //works unless you jump
+        //need to add in walls that disable parallaxComp so they act like walls
+        if (parallaxComp && rb2d.velocity.y == 0) //parallax guaranteed to affect only x axis movement
+         {
+             Debug.Log(parallaxComp.name + " is not null");
+             parallaxComp.Move(-rb2d.velocity);
+         }
 
+        // localScale;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpforce);
         }
+
         if (movex != 0f)
         {
             //Player starts facing right.
             //When its Scale.X value is negative it will face left instead.
             //The signs for Scale.X correspond to directions of the facing direction.
+            //these control direction, not movement
             Vector3 localScale = transform.localScale;
-            localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(movex);
-            transform.localScale = localScale;
+           localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(movex);
+           transform.localScale = localScale;
+            
         }
+
+
+        
+
         if (Input.GetKeyDown(KeyCode.T) && currObj)
         {
             //Check if object is storable
