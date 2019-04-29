@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour {
     public GameObject currObj = null;
     public Rigidbody2D rb2d;
     
-    //for parallax control
-    public GameObject parallaxObj;
-    private Parallax parallaxComp;
 
     Vector3 startingPosition;
 
@@ -26,11 +23,6 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         startingPosition = transform.position;
-        parallaxComp = parallaxObj.GetComponent<Parallax>();
-        if (parallaxComp)
-        {
-            Debug.Log(parallaxComp.name + " is parallax");
-        }
     }
 	
 	// Update is called once per frame
@@ -42,14 +34,7 @@ public class PlayerController : MonoBehaviour {
         //changes the velocity to match the keypress
         //transforms position
         rb2d.velocity = new Vector2(movex * speed, rb2d.velocity.y);
-        //adjust parallax
-        //works unless you jump
-        //need to add in walls that disable parallaxComp so they act like walls
-        if (parallaxComp && rb2d.velocity.y == 0) //parallax guaranteed to affect only x axis movement
-         {
-             Debug.Log(parallaxComp.name + " is not null");
-             parallaxComp.Move(-rb2d.velocity);
-         }
+       
 
         // localScale;
         if (Input.GetKeyDown(KeyCode.Space))
