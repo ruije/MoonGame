@@ -138,6 +138,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        Debug.Log(col.tag);
+    }
+
     void OnTriggerExit2D(Collider2D col)
     {
         Debug.Log(col.tag);

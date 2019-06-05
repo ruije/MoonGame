@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour {
             {
                 inventory[i] = item;
                 //GUI
-                InventoryButtons[i].image.overrideSprite = item.GetComponent<SpriteRenderer>().sprite;
+                //InventoryButtons[i].image.overrideSprite = item.GetComponent<SpriteRenderer>().sprite;
                 isAdd = true;
                 item.SendMessage("DoInteraction");
                 Debug.Log("Pickup successful!");
