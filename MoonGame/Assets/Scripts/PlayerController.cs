@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-    
+public class PlayerController : MonoBehaviour
+{
+
     //movement variables
     public float movex;
     public float speed;
@@ -15,18 +16,21 @@ public class PlayerController : MonoBehaviour {
     public Inventory inventory;
     public GameObject currObj = null;
     public Rigidbody2D rb2d;
-    
+
+    private bool isJumping;
 
     Vector3 startingPosition;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         rb2d = GetComponent<Rigidbody2D>();
         startingPosition = transform.position;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //right key => 1
         //left key => -1
         movex = Input.GetAxis("Horizontal");
@@ -34,28 +38,25 @@ public class PlayerController : MonoBehaviour {
         //changes the velocity to match the keypress
         //transforms position
         rb2d.velocity = new Vector2(movex * speed, rb2d.velocity.y);
-       
 
+        
         // localScale;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpforce);
+            isJumping = true;
         }
 
         if (movex != 0f)
         {
-            //Player starts facing right.
-            //When its Scale.X value is negative it will face left instead.
-            //The signs for Scale.X correspond to directions of the facing direction.
-            //these control direction, not movement
             Vector3 localScale = transform.localScale;
-           localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(movex);
-           transform.localScale = localScale;
-            
+            localScale.x = Mathf.Abs(transform.localScale.x) * Mathf.Sign(movex);
+            transform.localScale = localScale;
+
         }
 
 
-        
+
 
         if (Input.GetKeyDown(KeyCode.T) && currObj)
         {
@@ -95,13 +96,16 @@ public class PlayerController : MonoBehaviour {
                 }
             }
 
-            
+
 
         }
     }
 
+
+
     void OnTriggerEnter2D(Collider2D col) // col is the trigger object we collided with
     {
+        Debug.Log(col.tag);
         if (col.tag == "Coin")
         {
             coins++;
@@ -120,7 +124,7 @@ public class PlayerController : MonoBehaviour {
             //Get script for the object
             currIOScript = currObj.GetComponent<ItemController>();
             Debug.Log(currObj.name);
-            
+
             //NPC's speak
             if (currIOScript.isNPC)
             {
@@ -128,13 +132,19 @@ public class PlayerController : MonoBehaviour {
                 currIOScript.Speak();
             }
         }
+        if (col.gameObject.CompareTag("Floor"))
+        {
+            isJumping = false;
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
+        Debug.Log(col.tag);
         if (col.tag == "Item")
         {
-            if (col.tag == currObj.name) {
+            if (col.tag == currObj.name)
+            {
                 currObj = null;
             }
 
@@ -146,4 +156,5 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
 }
